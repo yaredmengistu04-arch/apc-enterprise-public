@@ -1,0 +1,41 @@
+{
+  "adapter": "apc",
+  "system_name": "Aleph Labs APC Enterprise 7.1.8-dev (pinned joint baseline)",
+  "a5_delay_hours": 24,
+  "adapter_config": {
+    "base_url": "https://APC-EVALUATION-HOST.example",
+    "token_env": "APC_EVAL_BEARER_TOKEN",
+    "expected_version": "7.1.8-dev",
+    "strict_version": true,
+    "timeout_seconds": 20,
+    "tls_verify": true,
+    "action_template": {
+      "operation": "aer1_test_action",
+      "resource": "aer1-joint-evaluation",
+      "purpose": "Joint lost-response evaluation using synthetic test effects only",
+      "parameters": {
+        "test_operation_key": "{K}",
+        "test_session_id": "{SESSION}",
+        "test_action_value": "baseline"
+      }
+    },
+    "mismatch": {
+      "field": "parameters.test_action_value",
+      "altered_value": "changed-for-A2"
+    },
+    "effect_counter": {
+      "base_url": "https://APC-TEST-PROVIDER.example",
+      "list_path": "/v1/records",
+      "record_path_template": "/v1/records/{record_id}",
+      "token_env": "APC_EFFECT_COUNTER_TOKEN",
+      "items_path": "items",
+      "id_field": "record_id",
+      "session_field": "test_session_id",
+      "operation_key_field": "test_operation_key",
+      "status_field": "status",
+      "success_values": ["SUCCESS"],
+      "outcome_field": "apc_outcome",
+      "digest_field": "outcome_digest"
+    }
+  }
+}
